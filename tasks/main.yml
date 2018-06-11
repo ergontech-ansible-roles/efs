@@ -1,2 +1,6 @@
 ---
 
+- include: install.yml
+  when: efs_enabled
+  tags:
+    - efs

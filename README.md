@@ -6,7 +6,12 @@ Role Variables
 --------------
 
 ```
-# Any Vars?
+# Mount target required if efs_enabled is true
+efs_target
+
+efs_enabled: false
+efs_dir: /mnt/efs
+
 ```
 
 ----------------

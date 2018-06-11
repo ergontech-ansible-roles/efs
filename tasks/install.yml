@@ -1,0 +1,27 @@
+---
+
+- name: Install NFS Tools
+  become: yes
+  apt:
+    name: nfs-common
+    state: present
+
+- name: Create EFS Directory
+  become: yes
+  file:
+    path: "{{ efs_dir }}"
+    state: directory
+    mode: 0777
+
+#TODO https://docs.aws.amazon.com/efs/latest/ug/using-amazon-efs-utils.html Amazon suggests using their efs-utils
+# package to encrypt data in transit. Probably a good idea to implement at some point. Too bad the package has to
+# be cloned from github and built before being installed.
+- name: Mount EFS
+  become: yes
+  mount:
+    state: mounted
+    path: "{{ efs_dir }}"
+    src: "{{ efs_target }}:/"
+    opts: nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,_netdev
+    fstype: nfs
+  when: efs_target is defined

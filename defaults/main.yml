@@ -1,0 +1,4 @@
+---
+
+efs_enabled: false
+efs_dir: /mnt/efs
